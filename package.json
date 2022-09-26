@@ -1,0 +1,31 @@
+{
+  "name": "cross",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@material-ui/core": "^4.12.4",
+    "axios": "^0.18.0",
+    "localforage": "^1.10.0",
+    "lodash": "^4.17.10",
+    "query-string": "^6.1.0",
+    "react": "^18.2.0",
+    "react-device-detect": "^2.2.2",
+    "react-dom": "^18.2.0",
+    "react-infinite-scroll-component": "^6.1.0",
+    "react-redux": "^5.0.7",
+    "react-router": "^4.2.0",
+    "react-router-dom": "^4.2.2",
+    "react-scripts": "1.1.4",
+    "redux": "^4.0.0",
+    "redux-persist": "^6.0.0",
+    "redux-promise": "^0.6.0",
+    "redux-thunk": "^2.3.0",
+    "validator": "^10.2.0"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  }
+}
