@@ -17,14 +17,15 @@ class Home extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-        page: 0,
-        per_page: 10,
-        openModal: false,
-        isEdit: false,
-        name: "",
-        playerCount: "",
-        region: "",
-        country: "",
+      isError: false,
+      page: 0,
+      per_page: 10,
+      openModal: false,
+      isEdit: false,
+      name: "",
+      playerCount: "",
+      region: "",
+      country: "",
     };
     this.renderModal = this.renderModal.bind(this);
 }
@@ -63,28 +64,45 @@ class Home extends React.Component {
   }
 
   addTeam = () => {
-    let newID = this.props.player_list.new_team.length > 0 ? this.props.player_list.new_team[this.props.player_list.new_team.length - 1 ].id + 1 : 1;
-    let newTeam = {
-      id: newID,
-      name: this.state.name,
-      division: this.state.region,
-      city: this.state.country,
-      player_count: this.state.playerCount
+    if(this.state.name !== "" && this.state.region !== "" && this.state.country !== "" && this.state.playerCount !== "" ){
+      let newID = this.props.player_list.new_team.length > 0 ? this.props.player_list.new_team[this.props.player_list.new_team.length - 1 ].id + 1 : 1;
+      let newTeam = {
+        id: newID,
+        name: this.state.name,
+        division: this.state.region,
+        city: this.state.country,
+        player_count: this.state.playerCount
+      }
+      this.setState({
+        isError: false
+      })
+      this.props.onSetAddTeam(newTeam);
+      this.handleClose()
+    }else{
+      this.setState({
+        isError: true
+      })
     }
-    this.props.onSetAddTeam(newTeam);
-    this.handleClose()
+    
   }
 
   updateTeam = (item) => {
-    let oldTeam = {
-      id: item.id,
-      name: this.state.name,
-      division: this.state.region,
-      city: this.state.country,
-      player_count: this.state.playerCount
+    if(this.state.name !== "" && this.state.region !== "" && this.state.country !== "" && this.state.playerCount !== "" ){
+      let oldTeam = {
+        id: item.id,
+        name: this.state.name,
+        division: this.state.region,
+        city: this.state.country,
+        player_count: this.state.playerCount
+      }
+      this.props.onSetUpdateTeam(oldTeam);
+      this.handleClose()
+    }else{
+      this.setState({
+        isError: true
+      })
     }
-    this.props.onSetUpdateTeam(oldTeam);
-    this.handleClose()
+    
   }
 
   openEditForm = (item) => {
@@ -124,6 +142,7 @@ class Home extends React.Component {
           <Typography id="modal-modal-title" variant="h6" component="h2" style={{ borderBottom: "1px solid #dddddd", margin: "20px 0" }}> { this.state.isEdit ? "Update" : "Create" } Team Form</Typography>
           <Grid style={{ textAlign: "center" }}> 
             <TextField
+              error={this.state.isError && this.state.name === "" }
               style={{ width: "100%", marginBottom: 10 }}
               required
               id="filled-required"
@@ -134,6 +153,7 @@ class Home extends React.Component {
             /> 
 
             <TextField
+              error={this.state.isError && this.state.playerCount === "" }
               style={{ width: "100%", marginBottom: 10 }}
               required
               id="filled-required"
@@ -144,6 +164,7 @@ class Home extends React.Component {
             /> 
 
             <TextField
+              error={this.state.isError && this.state.region === "" }
               style={{ width: "100%", marginBottom: 10 }}
               required
               id="filled-required"
@@ -154,6 +175,7 @@ class Home extends React.Component {
             />
 
             <TextField
+              error={this.state.isError && this.state.country === "" }
               style={{ width: "100%", marginBottom: 10 }}
               required
               id="filled-required"
